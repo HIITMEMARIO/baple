@@ -65,6 +65,15 @@ export interface Maplocation {
   isLoading: boolean;
 }
 
+// export interface MapMylocation {
+//   center: {
+//     lat: number;
+//     lng: number;
+//   };
+//   errMsg: string | null;
+//   isLoading: boolean;
+// }
+
 export interface PlacesForPlaceCard {
   bookmarks_count: number;
   reviews_count: number;

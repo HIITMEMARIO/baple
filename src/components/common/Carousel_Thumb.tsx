@@ -40,7 +40,7 @@ const CarouselThumb = ({ slideData }: { slideData: string[] }) => {
         {slideData.map((slide: string) => (
           <SwiperSlide key={slide}>
             <div className={`bg-slate-400 h-[350px] sm:h-[400px]`}>
-              <img
+              <Image
                 src={slide}
                 width={510}
                 height={300}
@@ -65,7 +65,7 @@ const CarouselThumb = ({ slideData }: { slideData: string[] }) => {
         {slideData.map((slide: string) => (
           <SwiperSlide key={slide}>
             <div className='bg-slate-400 h-[100px]'>
-              <img
+              <Image
                 src={slide}
                 width={200}
                 height={100}

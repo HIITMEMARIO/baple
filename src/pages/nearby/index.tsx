@@ -4,12 +4,8 @@ import MylocationButton from '@/components/map/MylocationButton';
 import MylocationOverlayMap from '@/components/map/MylocationOverlayMap';
 import PlacesModal from '@/components/map/PlacesModal';
 import { useViewport } from '@/hooks/useViewport';
-import { supabase } from '@/libs/supabase';
 import { RootState } from '@/redux/config/configStore';
-import { placesData } from '@/redux/modules/placesDataSlice';
-import { Maplocation } from '@/types/types';
 import { Spinner } from '@nextui-org/react';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
   Map,
@@ -17,7 +13,12 @@ import {
   MapTypeControl,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { setMyPosition } from '@/apis/mapData';
+import { useMap } from '@/hooks/useMap';
+import { usePlacesData } from '@/hooks/usePlacesData';
+
+import type { Maplocation } from '@/types/types';
 
 const NearByPage = () => {
   const [location, setLocation] = useState<Maplocation>({
@@ -41,8 +42,10 @@ const NearByPage = () => {
   const [regionName, setRegionName] = useState<string>('');
   const [cityName, setCityName] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const places = useSelector((state: RootState) => state.placesData);
+  console.log('🚀 ~ NearByPage ~ places:', places);
+  useMap({ location, setCityName, setRegionName });
+  usePlacesData({ location, regionName, cityName });
 
   useEffect(() => {
     if (isMobile) {
@@ -53,84 +56,7 @@ const NearByPage = () => {
   }, [isMobile]);
 
   useEffect(() => {
-    const fetchMap = async () => {
-      try {
-        axios
-          .get(
-            `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${location.center.lng}&y=${location.center.lat}&input_coord=WGS84`,
-            {
-              headers: {
-                Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
-              },
-            },
-          )
-          .then((res) => {
-            setRegionName(res.data.documents[0]?.address.region_2depth_name);
-            setCityName(res.data.documents[0]?.address.region_1depth_name);
-          });
-      } catch (error) {
-        throw error;
-      }
-    };
-    if (
-      location.center.lng !== 126.570667 &&
-      location.center.lat !== 33.450701
-    ) {
-      fetchMap();
-    }
-  }, [location]);
-
-  useEffect(() => {
-    const fetchPlaceData = async () => {
-      let { data: places, error } = await supabase
-        .from('places')
-        .select('*')
-        .eq('district', regionName)
-        .eq('city', cityName);
-      if (places !== null) {
-        dispatch(placesData(places));
-      }
-      if (error) throw 'error';
-    };
-
-    if (regionName !== '') fetchPlaceData();
-  }, [regionName, cityName]);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            isLoading: false,
-          }));
-          setMyLocation((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            isLoading: false,
-          }));
-        },
-        (err) => {
-          setLocation((prev) => ({
-            ...prev,
-            errMsg: err.message,
-          }));
-        },
-      );
-    } else {
-      setLocation((prev) => ({
-        ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
-        isLoading: false,
-      }));
-    }
+    setMyPosition({ setLocation, setMyLocation });
   }, []);
 
   return (

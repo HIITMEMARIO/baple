@@ -43,7 +43,7 @@ const PlaceCard = ({ place }: Props) => {
       onClick={() => setScrollY(window.scrollY)}
     >
       <div className='relative w-[90%] h-[200px] mx-auto sm:w-full sm:h-[14.5rem]  transition-all ring-2 ring-gray-100 rounded-3xl overflow-hidden shadow-md hover:ring-4 hover:ring-primary'>
-        <img
+        <NextImage
           src={imgURL}
           alt='place_image'
           // fill={true}
