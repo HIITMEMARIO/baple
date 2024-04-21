@@ -43,7 +43,6 @@ const NearByPage = () => {
   const [cityName, setCityName] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const places = useSelector((state: RootState) => state.placesData);
-  console.log('🚀 ~ NearByPage ~ places:', places);
   useMap({ location, setCityName, setRegionName });
   usePlacesData({ location, regionName, cityName });
 

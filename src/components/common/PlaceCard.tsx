@@ -48,6 +48,9 @@ const PlaceCard = ({ place }: Props) => {
           alt='place_image'
           // fill={true}
           className='rounded-3xl'
+          priority
+          width={400}
+          height={400}
         />
         <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 content-start place-items-center gap-y-3 px-10 py-4 rounded-3xl'>
           {is_paid ? (

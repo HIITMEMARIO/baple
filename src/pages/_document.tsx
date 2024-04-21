@@ -3,7 +3,9 @@ import { Html, Head, Main, NextScript } from 'next/document';
 export default function Document() {
   return (
     <Html lang='ko'>
-      <Head />
+      <Head>
+        {/* <link rel='preload' href='images\mainCarousel1.png' as='image' /> */}
+      </Head>
       <body>
         <Main />
         <NextScript />

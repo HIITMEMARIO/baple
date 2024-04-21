@@ -48,7 +48,7 @@ const Carousel = ({
           <SwiperSlide key={slide}>
             <div className={`h-[${slideHeight}]`}>
               <Image
-                // priority={true}
+                priority
                 src={slide}
                 width={1920}
                 height={500}

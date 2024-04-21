@@ -9,22 +9,22 @@ import Script from 'next/script';
 const nanumSquareRound = localFont({
   src: [
     {
-      path: './fonts/NanumSquareRoundL.ttf',
+      path: './fonts/NanumSquareRoundL.woff2',
       weight: '200', // font-extralight
       style: 'normal',
     },
     {
-      path: './fonts/NanumSquareRoundR.ttf',
+      path: './fonts/NanumSquareRoundR.woff2',
       weight: '400', // font-normal
       style: 'normal',
     },
     {
-      path: './fonts/NanumSquareRoundB.ttf',
+      path: './fonts/NanumSquareRoundB.woff2',
       weight: '700', // font-bold
       style: 'normal',
     },
     {
-      path: './fonts/NanumSquareRoundEB.ttf',
+      path: './fonts/NanumSquareRoundEB.woff2',
       weight: '900', // font-black
       style: 'normal',
     },
